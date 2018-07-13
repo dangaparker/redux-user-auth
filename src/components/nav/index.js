@@ -25,6 +25,7 @@ class Nav extends Component {
                 <NavItem to="/not-secret-list" text="Not Secret List" />
                 <NavItem to="/secret-list" text="Secret List" />
                 <NavItem to="/movie-quote" text="Movie Quote" />
+                <NavItem to="/sign-up" text="Sign Up"/>
                 
                 <li className="nav-item">
                     {this.renderAuthButton()}
