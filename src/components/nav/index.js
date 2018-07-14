@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import NavContainer from './nav_container';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -6,36 +6,42 @@ import { signIn, signOut } from '../../actions';
 import NavItem from './nav_item';
 
 class Nav extends Component {
+    renderLinks() {
+        if (this.props.auth) {
+            return (
+                <Fragment>
+                    <NavItem to="/secret-list" text="Secret List" />
+                    <NavItem to="/movie-quote" text="Movie Quote" />
+                    <li className='nav-item'>
+                        <button  onClick={this.props.signOut} className="btn btn-outline-danger">Sign Out</button>
+                    </li>
+                    {/* <NavItem  to="/" text="Sign Out" /> */}
+                </Fragment>
 
-    renderAuthButton(){
-        const { auth, signIn, signOut } = this.props;
-
-        if(auth){
-            return <button onClick={signOut} className="btn btn-outline-danger">Sign Out</button>
+            )
         }
-
-        return <button onClick={signIn} className="btn btn-outline-primary">Sign In</button>
+        return(
+            <Fragment>
+                <NavItem to="/sign-up" text="Sign Up" />
+                <NavItem to="/sign-in" text="Sign In" />
+            </Fragment>
+        )
     }
 
-    render(){
+    render() {
         return (
             <NavContainer>
                 <NavItem to="/" text="Home" />
                 <NavItem to="/about" text="About" />
-                <NavItem to="/not-secret-list" text="Not Secret List" />
-                <NavItem to="/secret-list" text="Secret List" />
-                <NavItem to="/movie-quote" text="Movie Quote" />
-                <NavItem to="/sign-up" text="Sign Up"/>
+                {this.renderLinks()}
+
                 
-                <li className="nav-item">
-                    {this.renderAuthButton()}
-                </li>
             </NavContainer>
         );
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         auth: state.user.auth
     }
